@@ -1,0 +1,6 @@
+{
+  "name": "Am I On A Hotspot",
+  "description": "A web service that returns if the requester is on a Hot Spot",
+  "repository": "https://github.com/rdpickard/amionahotspot.com",
+  "keywords": ["python3", "express", "static"]
+}
