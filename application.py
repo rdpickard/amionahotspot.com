@@ -32,16 +32,20 @@ def index():
         )
         return response
 
-    if ipaddress.IPv4Address(flask.request.remote_addr).is_private:
+    request_ip = flask.request.remote_addr
+    if ipaddress.IPv4Address(request_ip).is_private and flask.request.headers.get('X-Forwarded-For', None) is not None:
+        request_ip = flask.request.headers['X-Forwarded-For']
+    elif ipaddress.IPv4Address(request_ip).is_private
         response = application.response_class(
-            response=json.dumps({"error": "Can't lookup {} {} IP in private RFC 1918 space".format(flask.request.remote_addr, flask.request.headers['X-Forwarded-For'])}),
+            response=json.dumps({"error": "Can't lookup {} {} IP in private RFC 1918 space".format(
+                flask.request.remote_addr, flask.request.headers['X-Forwarded-For'])}),
             status=500,
             mimetype='application/json'
         )
         return response
 
     ip2location_response = requests.get(
-        ip2location_api_base_url.format(query_ip=flask.request.remote_addr, api_key=ip2location_api_key))
+        ip2location_api_base_url.format(query_ip=request_ip, api_key=ip2location_api_key))
 
     if ip2location_response.status_code == 200 :
         if ip2location_response.json().get("mobile_brand", "-") != '-':
