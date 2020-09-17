@@ -43,10 +43,7 @@ def index():
     ip2location_response = requests.get(
         ip2location_api_base_url.format(query_ip=flask.request.remote_addr, api_key=ip2location_api_key))
 
-    print(flask.request.remote_addr)
-
     if ip2location_response.status_code == 200 :
-        print(ip2location_response.json())
         if ip2location_response.json().get("mobile_brand", "-") != '-':
             ok_response_json["amionahotspot"] = True
             ok_response_json["network_guess"] = ip2location_response.json().get("mobile_brand")
@@ -65,6 +62,7 @@ def index():
             mimetype='application/json'
         )
         return response
+
 
 @application.route('/css/<path:path>')
 def send_css(path):
