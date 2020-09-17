@@ -19,6 +19,7 @@ def index():
 
     ok_response_json = {
         "amionahotspot": False,
+        "amionahotspot_numeric": -1,
         "network_guess": None
     }
 
@@ -50,7 +51,10 @@ def index():
     if ip2location_response.status_code == 200 :
         if ip2location_response.json().get("mobile_brand", "-") != '-':
             ok_response_json["amionahotspot"] = True
+            ok_response_json["amionahotspot_numeric"] = 1
             ok_response_json["network_guess"] = ip2location_response.json().get("mobile_brand")
+        else:
+            ok_response_json["amionahotspot_numeric"] = 0
 
         response = application.response_class(
             response=json.dumps(ok_response_json),
