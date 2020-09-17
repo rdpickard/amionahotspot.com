@@ -35,7 +35,7 @@ def index():
     request_ip = flask.request.remote_addr
     if ipaddress.IPv4Address(request_ip).is_private and flask.request.headers.get('X-Forwarded-For', None) is not None:
         request_ip = flask.request.headers['X-Forwarded-For']
-    elif ipaddress.IPv4Address(request_ip).is_private
+    elif ipaddress.IPv4Address(request_ip).is_private:
         response = application.response_class(
             response=json.dumps({"error": "Can't lookup {} {} IP in private RFC 1918 space".format(
                 flask.request.remote_addr, flask.request.headers['X-Forwarded-For'])}),
