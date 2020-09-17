@@ -34,7 +34,7 @@ def index():
 
     if ipaddress.IPv4Address(flask.request.remote_addr).is_private:
         response = application.response_class(
-            response=json.dumps({"error": "Can't lookup {} IP in private RFC 1918 space".format(flask.request.remote_addr))}),
+            response=json.dumps({"error": "Can't lookup {} IP in private RFC 1918 space".format(flask.request.remote_addr)}),
             status=500,
             mimetype='application/json'
         )
