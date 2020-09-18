@@ -20,7 +20,10 @@ def index():
     ok_response_json = {
         "amionahotspot": False,
         "amionahotspot_numeric": -1,
-        "network_guess": "-"
+        "network_guess": "-",
+        "geo_location_guess": "-",
+        "isp_guess": "-",
+        "netspeed_guess": "-"
     }
 
     ip2location_api_key = os.environ.get("ip2location_api_key")
@@ -55,6 +58,14 @@ def index():
             ok_response_json["network_guess"] = ip2location_response.json().get("mobile_brand")
         else:
             ok_response_json["amionahotspot_numeric"] = 0
+
+        ok_response_json["geo_location_guess"] = "{}/{}/{}".format(
+            ip2location_response.json().get("country_code", "Country Unavailable"),
+            ip2location_response.json().get("region_name", "Region Unavailable"),
+            ip2location_response.json().get("city_name", "City Unavailable")
+        )
+        ok_response_json["isp_guess"] = ip2location_response.json().get("isp", "ISP Unavailable")
+        ok_response_json["netspeed_guess"] = ip2location_response.json().get("net_speed", "Speed Unavailable")
 
         response = application.response_class(
             response=json.dumps(ok_response_json),
