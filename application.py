@@ -20,7 +20,7 @@ def index():
     ok_response_json = {
         "amionahotspot": False,
         "amionahotspot_numeric": -1,
-        "network_guess": None
+        "network_guess": "-"
     }
 
     ip2location_api_key = os.environ.get("ip2location_api_key")
