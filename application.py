@@ -7,7 +7,7 @@ import ipaddress
 application = flask.Flask(__name__)
 application.config['TEMPLATES_AUTO_RELOAD'] = True
 
-ip2location_api_base_url = "https://api.ip2location.com/v2/?ip={query_ip}&key={api_key}&package=WS24&addon=continent,country,region,city,geotargeting,country_groupings,time_zone_info"
+ip2location_api_base_url = "https://api.ip2location.com/v2/?ip={query_ip}&key={api_key}&package=WS24"
 
 
 @application.route('/')
