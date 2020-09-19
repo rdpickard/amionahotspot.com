@@ -59,8 +59,9 @@ def index():
 
     # If there is a redis instance configured, see if the IP is in there
     if redis_connection is not None:
-        ok_response_json = redis_connection.get(request_ip)
-        if ok_response_json is not None:
+        cahced_ok_response_json = redis_connection.get(request_ip)
+        if cahced_ok_response_json is not None:
+            ok_response_json = cahced_ok_response_json
             ok_response_json["from_cache"] = True
 
     if not ok_response_json["from_cache"]:
