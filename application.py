@@ -59,9 +59,9 @@ def index():
 
     # If there is a redis instance configured, see if the IP is in there
     if redis_connection is not None:
-        cahced_ok_response_json = redis_connection.get(request_ip)
-        if cahced_ok_response_json is not None:
-            ok_response_json = json.loads(cahced_ok_response_json)
+        cached_ok_response_json = redis_connection.get(request_ip)
+        if cached_ok_response_json is not None:
+            ok_response_json = json.loads(cached_ok_response_json)
             ok_response_json["from_cache"] = True
 
     if not ok_response_json["from_cache"]:
@@ -101,12 +101,12 @@ def index():
             )
             return response
 
-        response = application.response_class(
-            response=json.dumps(ok_response_json),
-            status=200,
-            mimetype='application/json'
-        )
-        return response
+    response = application.response_class(
+        response=json.dumps(ok_response_json),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 
 @application.route('/css/<path:path>')
