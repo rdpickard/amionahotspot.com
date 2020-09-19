@@ -61,7 +61,7 @@ def index():
     if redis_connection is not None:
         cahced_ok_response_json = redis_connection.get(request_ip)
         if cahced_ok_response_json is not None:
-            ok_response_json = cahced_ok_response_json
+            ok_response_json = json.loads(cahced_ok_response_json)
             ok_response_json["from_cache"] = True
 
     if not ok_response_json["from_cache"]:
@@ -89,7 +89,7 @@ def index():
 
             # If there is a redis instance configured, add the geoIP data to it for 1 day's time
             if redis_connection is not None:
-                redis_connection.set(request_ip, ok_response_json, ex=86400)
+                redis_connection.set(request_ip, json.dumps(ok_response_json), ex=86400)
 
         else:
             # Else if the the ip2location query didn't return a 200
