@@ -89,7 +89,7 @@ def index():
 
             # If there is a redis instance configured, add the geoIP data to it for 1 day's time
             if redis_connection is not None:
-                redis_connection.set(request_ip, ex=86400)
+                redis_connection.set(request_ip, ok_response_json, ex=86400)
 
         else:
             # Else if the the ip2location query didn't return a 200
